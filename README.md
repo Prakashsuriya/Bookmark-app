@@ -49,6 +49,84 @@ flowchart TB
     RealtimeServer --> Client
 ```
 
+## Workflow
+
+### User Authentication Flow
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐
+│    User     │────▶│  Google OAuth │────▶│  NextAuth   │
+│  Clicks     │     │   Sign-in     │     │   Session   │
+│ Sign in     │     │               │     │   Created   │
+└─────────────┘     └──────────────┘     └──────┬──────┘
+                                                │
+                                                ▼
+                                         ┌─────────────┐
+                                         │  JWT Token  │
+                                         │  with user  │
+                                         │     ID      │
+                                         └─────────────┘
+```
+
+### Adding a Bookmark Flow
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────┐     ┌─────────────┐
+│    User     │────▶│   Add Form   │────▶│   API Route  │────▶│  Supabase   │
+│   Enters    │     │   Submit     │     │   POST /api  │     │   INSERT    │
+│ URL + Title │     │              │     │  /bookmarks  │     │             │
+└─────────────┘     └──────────────┘     └─────────────┘     └──────┬──────┘
+                                                                    │
+                                                                    ▼
+                              ┌─────────────────────────────────────────────┐
+                              │         Database (PostgreSQL)                │
+                              │   ┌─────────────────────────────────────┐   │
+                              │   │  bookmarks table                    │   │
+                              │   │  • id: UUID                         │   │
+                              │   │  • user_id: TEXT                    │   │
+                              │   │  • url: TEXT                        │   │
+                              │   │  • title: TEXT                      │   │
+                              │   │  • created_at: TIMESTAMP            │   │
+                              │   └─────────────────────────────────────┘   │
+                              └─────────────────────────────────────────────┘
+```
+
+### Real-time Sync Flow
+```
+┌─────────────┐         WebSocket          ┌─────────────┐
+│   Tab 1     │◄──────────────────────────►│   Tab 2     │
+│  (User A)   │    Supabase Realtime       │  (User A)   │
+│             │                            │             │
+│ ┌─────────┐ │    INSERT/UPDATE/DELETE    │ ┌─────────┐ │
+│ │Bookmark │ │◄──────────────────────────►│ │Bookmark │ │
+│ │  Added  │ │     Broadcast Change       │ │ Appears │ │
+│ └─────────┘ │                            │ └─────────┘ │
+└─────────────┘                            └─────────────┘
+         │                                          │
+         └──────────────┬───────────────────────────┘
+                        │
+                        ▼
+              ┌─────────────────┐
+              │  Supabase       │
+              │  Realtime       │
+              │  Server         │
+              └─────────────────┘
+```
+
+### Data Privacy Flow
+```
+User A ──▶ API Request ──▶ Server checks session.user.id
+                              │
+                              ▼
+                    ┌───────────────────┐
+                    │  Query Database   │
+                    │  WHERE user_id =  │
+                    │  session.user.id  │
+                    └───────────────────┘
+                              │
+                              ▼
+User A ◀── Only User A's ◀── Results filtered
+           bookmarks          by user_id
+```
+
 ## Database Schema
 
 ```sql
