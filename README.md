@@ -2,7 +2,7 @@
 
 A modern bookmark manager built with Next.js, Supabase, and Google OAuth. Features real-time synchronization across multiple browser tabs.
 
-**Live Demo**: [https://smart-bookmark-app.vercel.app](https://smart-bookmark-app.vercel.app)
+**Live Demo**: [Deploy to Vercel to get your live URL]
 
 ## Features
 
