@@ -75,7 +75,7 @@ export function BookmarkList() {
           } else if (payload.eventType === "DELETE") {
             // Handle both payload.old?.id and payload.new?.id for DELETE events
             // Supabase may send the deleted record ID in different locations
-            const deletedId = payload.old?.id ?? payload.new?.id;
+            const deletedId = (payload.old as Bookmark | undefined)?.id ?? (payload.new as Bookmark | undefined)?.id;
             if (deletedId) {
               setBookmarks((prev) =>
                 prev.filter((bookmark) => bookmark.id !== deletedId)
@@ -83,10 +83,11 @@ export function BookmarkList() {
               setToast({ message: "Bookmark deleted", type: "success" });
             }
           } else if (payload.eventType === "UPDATE") {
+            const updatedBookmark = payload.new as Bookmark;
             setBookmarks((prev) =>
               prev.map((bookmark) =>
-                bookmark.id === payload.new.id
-                  ? (payload.new as Bookmark)
+                bookmark.id === updatedBookmark.id
+                  ? updatedBookmark
                   : bookmark
               )
             );
