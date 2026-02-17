@@ -71,61 +71,50 @@ export function AddBookmarkForm({ onBookmarkAdded }: AddBookmarkFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-md">
-      <h2 className="text-lg font-semibold text-gray-800 mb-4">Add New Bookmark</h2>
+    <div className="bg-[#111] border border-white/5 rounded-2xl p-6">
+      <h2 className="text-base font-semibold text-white mb-1">Add a new bookmark</h2>
+      <p className="text-sm text-gray-500 mb-4">
+        Bookmarks are private to your account and sync in real-time across tabs.
+      </p>
       
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+        <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-red-400 text-sm">
           {error}
         </div>
       )}
 
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="url" className="block text-sm font-medium text-gray-700 mb-1">
-            URL
-          </label>
-          <input
-            type="text"
-            id="url"
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            disabled={isLoading}
-          />
-        </div>
-
-        <div>
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="My Favorite Website"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-            disabled={isLoading}
-          />
-        </div>
-
+      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+        <input
+          type="text"
+          placeholder="Optional title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="flex-1 px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
+          disabled={isLoading}
+        />
+        <input
+          type="text"
+          placeholder="https://example.com"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          className="flex-[2] px-4 py-2.5 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/50 transition-all"
+          disabled={isLoading}
+        />
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center gap-2"
+          className="px-6 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-medium rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
         >
           {isLoading ? (
             <>
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              Adding...
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
+              <span>Adding...</span>
             </>
           ) : (
-            "Add Bookmark"
+            "Add bookmark"
           )}
         </button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

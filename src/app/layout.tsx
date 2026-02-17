@@ -6,8 +6,8 @@ import { Providers } from "@/components/Providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Smart Bookmark App",
-  description: "A simple bookmark manager with real-time sync",
+  title: "Smart Bookmark",
+  description: "Clean, private, real-time bookmarks",
 };
 
 export default function RootLayout({
@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" className="dark">
+      <body className={`${inter.className} bg-[#0a0a0a] text-white min-h-screen`}>
         <Providers>{children}</Providers>
       </body>
     </html>
