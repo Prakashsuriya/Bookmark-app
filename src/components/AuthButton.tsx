@@ -14,12 +14,12 @@ export function AuthButton() {
           <img
             src={session.user.image}
             alt={session.user.name || "User"}
-            className="w-8 h-8 rounded-full border border-white/10"
+            className="w-8 h-8 rounded-full border border-[var(--border)]"
           />
         )}
         <button
           onClick={() => signOut()}
-          className="px-4 py-2 text-sm text-gray-400 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all"
+          className="px-4 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] bg-[var(--background)] hover:bg-[var(--card-hover)] border border-[var(--border)] rounded-lg transition-all"
         >
           Sign out
         </button>
@@ -34,10 +34,10 @@ export function AuthButton() {
         signIn("google");
       }}
       disabled={isLoading}
-      className="flex items-center justify-center gap-3 w-full px-4 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white transition-all disabled:opacity-50"
+      className="flex items-center justify-center gap-3 w-full px-4 py-3 bg-[var(--background)] hover:bg-[var(--card-hover)] border border-[var(--border)] rounded-lg text-[var(--foreground)] transition-all disabled:opacity-50"
     >
       {isLoading ? (
-        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-[var(--accent)]"></div>
       ) : (
         <>
           <svg className="w-5 h-5" viewBox="0 0 24 24">

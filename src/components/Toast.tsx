@@ -24,8 +24,8 @@ export function Toast({ message, type, onClose }: ToastProps) {
     <div
       className={`fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 ${
         type === "success"
-          ? "bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
-          : "bg-red-500/10 border border-red-500/20 text-red-400"
+          ? "bg-[var(--accent)]/10 border border-[var(--accent)]/20 text-[var(--accent)]"
+          : "bg-red-500/10 border border-red-500/20 text-red-500"
       } ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-2"}`}
     >
       <svg

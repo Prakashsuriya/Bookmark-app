@@ -8,6 +8,7 @@ import { BookmarkItem } from "./BookmarkItem";
 import { AddBookmarkForm } from "./AddBookmarkForm";
 import { AuthButton } from "./AuthButton";
 import { Toast } from "./Toast";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function BookmarkList() {
   const { data: session, status } = useSession();
@@ -114,15 +115,15 @@ export function BookmarkList() {
 
   if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#0a0a0a]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
       </div>
     );
   }
 
   if (!session) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0a0a0a] px-4">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[var(--background)] px-4">
         {toast && (
           <Toast
             message={toast.message}
@@ -131,20 +132,20 @@ export function BookmarkList() {
           />
         )}
         <div className="text-center max-w-md">
-          <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/20">
-            <span className="text-cyan-400 font-bold text-xl">SB</span>
+          <div className="mb-6 inline-flex items-center justify-center w-12 h-12 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/20">
+            <span className="text-[var(--accent)] font-bold text-xl">SB</span>
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-bold text-[var(--foreground)] mb-2">
             Smart Bookmark
           </h1>
-          <p className="text-sm text-gray-400 mb-8">
+          <p className="text-sm text-[var(--muted)] mb-8">
             Clean, private, real-time bookmarks.
           </p>
-          <p className="text-gray-300 mb-6 text-sm">
+          <p className="text-[var(--foreground)] mb-6 text-sm">
             Sign in with Google to save and sync your bookmarks across devices.
           </p>
           <AuthButton />
-          <p className="text-xs text-gray-500 mt-6">
+          <p className="text-xs text-[var(--muted-foreground)] mt-6">
             We only use Google for secure authentication. No passwords to remember.
           </p>
         </div>
@@ -153,7 +154,7 @@ export function BookmarkList() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-[var(--background)]">
       {toast && (
         <Toast
           message={toast.message}
@@ -163,20 +164,23 @@ export function BookmarkList() {
       )}
       
       {/* Header */}
-      <header className="bg-[#111]/80 backdrop-blur-md border-b border-white/5 sticky top-0 z-10">
+      <header className="bg-[var(--card)]/80 backdrop-blur-md border-b border-[var(--border)] sticky top-0 z-10">
         <div className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center">
-              <span className="text-cyan-400 font-bold text-sm">SB</span>
+            <div className="w-8 h-8 rounded-full bg-[var(--accent)]/10 border border-[var(--accent)]/20 flex items-center justify-center">
+              <span className="text-[var(--accent)] font-bold text-sm">SB</span>
             </div>
             <div>
-              <h1 className="text-lg font-semibold text-white">Smart Bookmark</h1>
-              <p className="text-xs text-gray-500">
+              <h1 className="text-lg font-semibold text-[var(--foreground)]">Smart Bookmark</h1>
+              <p className="text-xs text-[var(--muted)]">
                 Signed in as {session.user?.email}
               </p>
             </div>
           </div>
-          <AuthButton />
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <AuthButton />
+          </div>
         </div>
       </header>
 
@@ -188,30 +192,30 @@ export function BookmarkList() {
         </div>
 
         {/* Bookmarks List */}
-        <div className="bg-[#111] border border-white/5 rounded-2xl p-6">
+        <div className="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-white">Your bookmarks</h2>
-            <span className="text-sm text-gray-500">
+            <h2 className="text-lg font-semibold text-[var(--foreground)]">Your bookmarks</h2>
+            <span className="text-sm text-[var(--muted)]">
               {bookmarks.length} {bookmarks.length === 1 ? "bookmark" : "bookmarks"}
             </span>
           </div>
 
           {error && (
-            <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm">
+            <div className="mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-500 text-sm">
               {error}
             </div>
           )}
 
           {isLoading ? (
             <div className="flex justify-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--accent)]"></div>
             </div>
           ) : bookmarks.length === 0 ? (
             <div className="text-center py-12">
-              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-white/5 flex items-center justify-center">
+              <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--border)] flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-gray-600"
+                  className="h-8 w-8 text-[var(--muted)]"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -224,8 +228,8 @@ export function BookmarkList() {
                   />
                 </svg>
               </div>
-              <h3 className="text-gray-300 mb-2">No bookmarks yet</h3>
-              <p className="text-gray-500 text-sm">
+              <h3 className="text-[var(--foreground)] mb-2">No bookmarks yet</h3>
+              <p className="text-[var(--muted)] text-sm">
                 Add your first bookmark above to get started
               </p>
             </div>
@@ -243,22 +247,22 @@ export function BookmarkList() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex items-center justify-between mt-6 pt-6 border-t border-white/5">
-                  <p className="text-sm text-gray-500">
+                <div className="flex items-center justify-between mt-6 pt-6 border-t border-[var(--border)]">
+                  <p className="text-sm text-[var(--muted)]">
                     Showing {startIndex + 1} - {Math.min(startIndex + itemsPerPage, bookmarks.length)} of {bookmarks.length} bookmarks
                   </p>
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
-                      className="px-4 py-2 text-sm text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="px-4 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       Previous
                     </button>
                     <button
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
-                      className="px-4 py-2 text-sm text-gray-400 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="px-4 py-2 text-sm text-[var(--muted)] hover:text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       Next
                     </button>

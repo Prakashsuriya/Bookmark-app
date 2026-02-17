@@ -59,10 +59,10 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
   const domain = bookmark.url ? new URL(bookmark.url).hostname.replace(/^www\./, "") : "";
 
   return (
-    <div className="group bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-white/10 rounded-xl p-4 transition-all duration-200">
+    <div className="group bg-[var(--background)] hover:bg-[var(--card-hover)] border border-[var(--border)] hover:border-[var(--border-hover)] rounded-xl p-4 transition-all duration-200">
       <div className="flex items-start gap-4">
         {/* Favicon */}
-        <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center flex-shrink-0 overflow-hidden">
+        <div className="w-10 h-10 rounded-lg bg-[var(--card)] flex items-center justify-center flex-shrink-0 overflow-hidden">
           {faviconUrl ? (
             <img
               src={faviconUrl}
@@ -73,7 +73,7 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
               }}
             />
           ) : (
-            <span className="text-cyan-400 font-bold text-lg">
+            <span className="text-[var(--accent)] font-bold text-lg">
               {bookmark.title.charAt(0).toUpperCase()}
             </span>
           )}
@@ -87,12 +87,12 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
             rel="noopener noreferrer"
             className="block group/link"
           >
-            <h3 className="text-white font-medium truncate group-hover/link:text-cyan-400 transition-colors">
+            <h3 className="text-[var(--foreground)] font-medium truncate group-hover/link:text-[var(--accent)] transition-colors">
               {bookmark.title}
             </h3>
-            <p className="text-gray-500 text-sm truncate mt-0.5">{domain}</p>
+            <p className="text-[var(--muted)] text-sm truncate mt-0.5">{domain}</p>
           </a>
-          <p className="text-xs text-gray-600 mt-2 flex items-center gap-1">
+          <p className="text-xs text-[var(--muted-foreground)] mt-2 flex items-center gap-1">
             <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -106,7 +106,7 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
             href={bookmark.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 text-gray-500 hover:text-cyan-400 hover:bg-cyan-500/10 rounded-lg transition-all"
+            className="p-2 text-[var(--muted)] hover:text-[var(--accent)] hover:bg-[var(--accent)]/10 rounded-lg transition-all"
             title="Open link"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -117,7 +117,7 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
           {!showConfirm ? (
             <button
               onClick={() => setShowConfirm(true)}
-              className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all"
+              className="p-2 text-[var(--muted)] hover:text-red-500 hover:bg-red-500/10 rounded-lg transition-all"
               title="Delete bookmark"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,7 +136,7 @@ export function BookmarkItem({ bookmark, onDelete }: BookmarkItemProps) {
               <button
                 onClick={() => setShowConfirm(false)}
                 disabled={isDeleting}
-                className="px-3 py-1.5 text-xs font-medium text-gray-400 hover:text-white transition-colors"
+                className="px-3 py-1.5 text-xs font-medium text-[var(--muted)] hover:text-[var(--foreground)] transition-colors"
               >
                 Cancel
               </button>
